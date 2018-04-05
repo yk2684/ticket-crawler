@@ -16,5 +16,5 @@ class SeatgeekPipeline(object):
     def process_item(self, item, spider):
         if 'New York' not in item['location']:
             raise DropItem("Performances not in New York")
-        item['performance'] = datetime.datetime.strptime(item['performance'],'%Y%m%d%I%p')
+        #item['performance'] = datetime.datetime.strptime(item['performance'],'%Y%m%d%I%p')
         return item

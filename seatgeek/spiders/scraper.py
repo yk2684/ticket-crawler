@@ -23,9 +23,18 @@ class seatgeekSpider(scrapy.Spider):
     def parse(self, response):
         item = SeatgeekItem()
 
+        for d in response.xpath('normalize-space(//div[@class="event-listing-date"]/text())').extract():
+            item['date'] = d.strip()
+        
+        for t in response.xpath('normalize-space(//div[@class="event-listing-time"]/text())').extract():
+            item['time'] = t[4:]
+
+        for l in response.xpath('//span[@class="locality"]/text()').extract():
+            item['location'] = l
+
         for href in response.xpath('//a[@class="event-listing-title"]/@href').extract():
-            item['performance'] = re.sub('[^0-9]','', href.split('/')[-3])+'PM'
-            item['location'] = href.split('/')[-4]
+            #item['performance'] = re.sub('[^0-9]','', href.split('/')[-3])+'PM'
+            #item['location'] = href.split('/')[-4]
             item["eventId"] = href.split('/')[-1]
 
             yield scrapy.Request(
@@ -46,7 +55,8 @@ class seatgeekSpider(scrapy.Spider):
             item['listingId'] = i["id"]
             item['quantity'] = i["q"]
             item['vendor'] = "SeatGeek"
-            item['datePulled'] = datetime.datetime.now()
+            item['datePulled'] = datetime.datetime.now().strftime("%m/%d/%Y")
             item['score'] = 0
+            item['performance'] = item['date'] + ' ' + item['time']
 
             yield item.copy()

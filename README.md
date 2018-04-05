@@ -30,7 +30,7 @@ Run the scrapy spider `seatgeek_spider`
 
 Example command: `scrapy crawl seatgeek_spider -o bandsvisit.csv -a showname=the-band-s-visit`
 
-### Prerequisites
+## Prerequisites
 
-Scrapy
-StubHub Developer Account (API)
+- Scrapy
+- StubHub Developer Account (API)

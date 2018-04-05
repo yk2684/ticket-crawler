@@ -23,3 +23,6 @@ class SeatgeekItem(scrapy.Item):
     listingPrice = scrapy.Field()
     datePulled = scrapy.Field()
     location = scrapy.Field()
+    score = scrapy.Field()
+    date = scrapy.Field()
+    time =scrapy.Field()
